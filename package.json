@@ -1,0 +1,161 @@
+{
+  "name": "antigravity-usage",
+  "version": "1.0.0",
+  "displayName": "Google Antigravity Usage - Fast, Simple, Local",
+  "description": "Ultra-fast, lightweight, 100% local status bar tracker for Google Antigravity model quotas",
+  "author": "ideeyn",
+  "publisher": "ideeyn",
+  "license": "MIT",
+  "keywords": [
+    "antigravity",
+    "ag",
+    "agy",
+    "usage",
+    "quota",
+    "monitor",
+    "tokens",
+    "tracker",
+    "gemini",
+    "google"
+  ],
+  "icon": "assets/icon.png",
+  "engines": {
+    "vscode": "^1.107.0"
+  },
+  "categories": [
+    "AI",
+    "Visualization",
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "antigravity-usage.refresh",
+        "title": "Refresh Antigravity Usage"
+      },
+      {
+        "command": "antigravity-usage.open-settings",
+        "title": "Open Antigravity Usage Settings"
+      },
+      {
+        "command": "antigravity-usage.toggle-gemini-5h",
+        "title": "Toggle Gemini 5-Hour Quota in Status Bar"
+      },
+      {
+        "command": "antigravity-usage.toggle-gemini-weekly",
+        "title": "Toggle Gemini Weekly Quota in Status Bar"
+      },
+      {
+        "command": "antigravity-usage.toggle-other-5h",
+        "title": "Toggle Other Models 5-Hour Quota in Status Bar"
+      },
+      {
+        "command": "antigravity-usage.toggle-other-weekly",
+        "title": "Toggle Other Models Weekly Quota in Status Bar"
+      }
+    ],
+    "configuration": {
+      "title": "Google Antigravity Usage",
+      "properties": {
+        "antigravity-usage.show-gemini-5h": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Gemini 5-hour quota in status bar."
+        },
+        "antigravity-usage.show-gemini-weekly": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Gemini weekly quota in status bar."
+        },
+        "antigravity-usage.show-other-5h": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Other models 5-hour quota in status bar."
+        },
+        "antigravity-usage.show-other-weekly": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show Other models weekly quota in status bar."
+        },
+        "antigravity-usage.limit-gemini-warning": {
+          "type": "number",
+          "default": 20,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Warning quota threshold percentage for Gemini (displays 🟡)."
+        },
+        "antigravity-usage.limit-gemini-runout": {
+          "type": "number",
+          "default": 10,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Runout quota threshold percentage for Gemini (displays 🔴)."
+        },
+        "antigravity-usage.limit-other-warning": {
+          "type": "number",
+          "default": 20,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Warning quota threshold percentage for Other models (displays 🟡)."
+        },
+        "antigravity-usage.limit-other-runout": {
+          "type": "number",
+          "default": 10,
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Runout quota threshold percentage for Other models (displays 🔴)."
+        },
+        "antigravity-usage.refresh-interval": {
+          "type": "number",
+          "default": 60,
+          "minimum": 0,
+          "maximum": 3600,
+          "description": "Refresh interval in seconds. Set to 0 to disable auto-refresh."
+        },
+        "antigravity-usage.status-bar-alignment": {
+          "type": "string",
+          "default": "Right",
+          "enum": [
+            "Left",
+            "Right"
+          ],
+          "description": "Alignment of the status bar item."
+        },
+        "antigravity-usage.status-bar-priority": {
+          "type": "number",
+          "default": 110,
+          "description": "Priority of the status bar item. Play with this to move the bar position, one item left/right"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --minify --tree-shaking=true",
+    "watch": "esbuild ./src/extension.ts --bundle --outfile=out/extension.js --external:vscode --format=cjs --platform=node --sourcemap --watch",
+    "package": "npx @vscode/vsce package --out dev_vsix/ --no-dependencies",
+    "release": "powershell -ExecutionPolicy Bypass -File .\\publish.ps1",
+    "release:minor": "powershell -ExecutionPolicy Bypass -File .\\publish.ps1 -Minor",
+    "release:major": "powershell -ExecutionPolicy Bypass -File .\\publish.ps1 -Major",
+    "generate-icon": "node assets/generate-icon.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "publish:ovsx": "npx ovsx publish",
+    "publish:vsce": "npx vsce publish",
+    "publish": "npm run publish:ovsx && npm run publish:vsce"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@resvg/resvg-js": "^2.6.2",
+    "@types/node": "^26.2.0",
+    "@types/vscode": "^1.107.0",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.8.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.67.0"
+  }
+}

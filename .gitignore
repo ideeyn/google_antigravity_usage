@@ -1,0 +1,12 @@
+out
+node_modules
+src/*.js
+.vscode-test
+*.vsix
+.DS_Store
+Thumbs.db
+dev
+.idea
+dev_vsix
+vsix
+assets_alt
