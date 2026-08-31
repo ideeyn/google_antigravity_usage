@@ -6,6 +6,14 @@
   "author": "ideeyn",
   "publisher": "ideeyn",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ideeyn/google_antigravity_usage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ideeyn/google_antigravity_usage/issues"
+  },
+  "homepage": "https://github.com/ideeyn/google_antigravity_usage#readme",
   "keywords": [
     "antigravity",
     "ag",
