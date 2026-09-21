@@ -1,31 +1,9 @@
 # Google Antigravity Usage - Fast, Simple, Local
 
-No re-login Antigravity needed. An ultra-fast, lightweight, and 100% local VS Code status bar monitor. Built initially to welcome the Official Google-Antigravity extension in `VScode`. 
-
-To give more context: previously you can only access Gemini officially from Antigravity-IDE app (which is VScode's sibling), and you cant use that from VScode except through unofficial extensions. But finally per-late `August 2026` Google released an Official Antigravity Extension for VScode.
-
-I switched instantly to VScode, because it has more extension supports compared to open market in Antigravity-IDE, which I need. But then, I struggle to find Antigravity Usage extension that is really simple and minimalist, I just need to see the usage in bar, and maybe simple visual when hovering on it. I dont need those metric craps and full-screen graphs most of the time.
-
-I saw good extensions for this in OpenVSX marketplace in Antigravity-IDE. But in VScode marketplace, not yet (maybe because the google-official-ext is pretty newborn here). So, here I am, publishing a new one, lol. I published this like 9 days after the Official Google Antigravity extension got published. Hope this extension fits other peoples!
-
-Oh important note: in some rare cases, this extension failed to read your usage after first installation due to VScode caching or something else. I find that if you just close all VScode windows and then reopen them back, everything will work just fine after. Just once, the first time you install, if you have this issue. Else, you are fine to go. I still don't have any other clue to cover this case, maintainers/PR are welcome as long as you keep this extension tiny and simple as the original philosophy, thankyou!
-
----
-
-## Features
-
-- **100% Local & Private**: No external servers, no cloud proxies, and zero telemetry. Queries your local Antigravity Language Server loopback interface (`127.0.0.1`) directly.
-- **Zero Bloat**: ultra-fast. no complex or heavy webviews or background scrapers. Packaged at `~20 KB` on download (but it doubles to `~40 KB` usually during installation, idk why. anyway its still super small).
-- **4 Core Metrics Monitored**:
-  1. **Gemini 5h Limit** (remaining % and reset countdown)
-  2. **Gemini Weekly Limit** (remaining % and reset countdown)
-  3. **Other Models 5h Limit** (Claude / GPT, remaining % and reset countdown)
-  4. **Other Models Weekly Limit** (Claude / GPT, remaining % and reset countdown)
-
----
+No re-login Antigravity needed. An ultra-fast, lightweight, and 100% local VS Code status bar monitor. Built initially to welcome the Official Google-Antigravity extension in your `VScode`. 
 
 ## Status Bar & Tooltip Preview
-You might get dissapointed that I dont include any real png screenshot here. but I'm just trying my best to compress entire repo to the minimum size. And, anyway, both bar and tooltip mainly are just ascii, no expensive codes or something else there. So arguably, the ascii you see here is almost identical to the real one you will see on VScode.
+You might get dissapointed that I dont include any real png screenshot here. but I'm just trying my best to compress extenstion to the minimum size. And, anyway, both bar and tooltip mainly are just ascii, no expensive codes or something else there. So arguably, the ascii you see here is almost identical to the real one you will see on VScode.
 
 ### Status Bar Text
 ```text
@@ -59,13 +37,37 @@ Hover over the status bar item to view distinct 2-line quota blocks with interac
           ├──────────────────────────────────────┤
           │  ⚙ Settings              Refresh ↻  │
           └──────────────────────────────────────┘
-┌───────────────────────────────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────────────────────────────┐
 │  🔴 Gemini 19% (1h 46m) • 4% (2d)      🟡 Other 11% (1h 3m) • 97% (2d)  │
-└───────────────────────────────────────────────────────────────────────────┘
+└──────────────────────────────────────────────────────────────────────────┘
 ```
 note: color in bar will appear replacing `✦` and `✳` when certain limit reached. you can play with them in setting. by default 🟡 will appear on `20%` and 🔴 on `10%`. 
 
 In the bar, both icons will follow the worse situation between `5-hour` vs `weekly` limit. As you can see above in the ascii example.
+
+---
+
+## Why I published this extension?
+
+Previously, you can only access Gemini officially from Antigravity-IDE app, and you can't use that from VScode except through unofficial extensions. But finally per-late `August 2026` Google released an Official Antigravity Extension for VScode.
+
+I switched instantly to VScode, because it has more extension supports compared to open market in Antigravity-IDE, which I need. But then, I struggle to find Antigravity `Usage extension` that is really `simple` and `minimalist`, I just need to see the usage in bar, and maybe simple visual when hovering on it. I don't need those metric craps and full-screen graphs most of the time.
+
+I saw good extensions for this in OpenVSX marketplace in Antigravity-IDE. But not yet in VScode marketplace, maybe because the `antigravity-official-ext` is pretty newborn here. So, here I am, publishing a new one. I published this like 9 days after the Official Google Antigravity extension got published. Hope this extension fits other peoples!
+
+Oh important note: in some rare cases, this extension failed to read your usage after first installation due to VScode caching or something else. I find that if you just close all VScode windows and then reopen them back, everything will work just fine after. Just once, the first time you install, if you have this issue. Else, you are fine to go. I still don't have any other clue to cover this case, maintainers/PR are welcome as long as you keep this extension tiny and simple as the original philosophy, thankyou!
+
+---
+
+## Feature / Promises
+
+- **100% Local & Private**: No `external servers`, no `cloud proxies`, and `zero telemetry`. Queries your local Antigravity Language Server loopback interface (`127.0.0.1`) directly.
+- **Zero Bloat**: ultra-fast. no `complex` or `heavy` webviews or background `scrapers`. Packaged at `~20 KB` on download (but it doubles to `~40 KB` usually during installation. anyway its still super small).
+- **4 Core Metrics Monitored**:
+  1. **Gemini 5h Limit** (remaining % and reset countdown)
+  2. **Gemini Weekly Limit** (remaining % and reset countdown)
+  3. **Other Models 5h Limit** (Claude / GPT, remaining % and reset countdown)
+  4. **Other Models Weekly Limit** (Claude / GPT, remaining % and reset countdown)
 
 ---
 
