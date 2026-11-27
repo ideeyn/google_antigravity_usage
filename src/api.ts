@@ -1,5 +1,8 @@
+import * as fs from 'fs';
 import * as http from 'http';
 import * as https from 'https';
+import * as os from 'os';
+import * as path from 'path';
 import { delay, getPlatformStrategy, validatePort } from './platform';
 import { CachedConnection, ProcessInfo, ServerQuotaSummaryResponse, UsageData } from './types';
 
@@ -33,6 +36,29 @@ function extractHubPort(cmd: string): number | undefined {
 	if (!match) { return undefined; }
 	const port = parseInt(match[1] ?? match[2] ?? match[3], 10);
 	return validatePort(port) ? port : undefined;
+}
+
+function extractAppDataDir(cmd: string): string {
+	const match = cmd.match(/--app_data_dir(?:=|\s+)(?:"([^"]+)"|'([^']+)'|([^\s"']+))/i);
+	const dir = (match?.[1] ?? match?.[2] ?? match?.[3] ?? '').trim();
+	return dir.length > 0 ? dir : 'antigravity';
+}
+
+function readHubDaemonConfig(hubPort: number, appDataDir: string): { port: number; csrfToken: string } | undefined {
+	const daemonFile = path.join(os.homedir(), '.gemini', appDataDir, 'daemon', `hub_${hubPort}.json`);
+	try {
+		const raw = fs.readFileSync(daemonFile, 'utf8');
+		const data = JSON.parse(raw) as { csrfToken?: unknown; httpsPort?: unknown; httpPort?: unknown };
+		if (typeof data.csrfToken !== 'string' || data.csrfToken.trim().length === 0) {
+			return undefined;
+		}
+		const port = typeof data.httpsPort === 'number' && validatePort(data.httpsPort)
+			? data.httpsPort
+			: (typeof data.httpPort === 'number' && validatePort(data.httpPort) ? data.httpPort : hubPort);
+		return { port, csrfToken: data.csrfToken.trim() };
+	} catch {
+		return undefined;
+	}
 }
 
 function extractAppConfigCsrfToken(html: string): string | undefined {
@@ -172,6 +198,10 @@ async function resolveProcess(proc: ProcessInfo): Promise<{ port: number; csrfTo
 
 	const hubPort = extractHubPort(proc.cmd);
 	if (hubPort !== undefined) {
+		const daemon = readHubDaemonConfig(hubPort, extractAppDataDir(proc.cmd));
+		if (daemon && await validatePortConnection(daemon.port, daemon.csrfToken)) {
+			return daemon;
+		}
 		const hubHtml = await fetchHubRootPage(hubPort);
 		const hubToken = extractAppConfigCsrfToken(hubHtml);
 		if (hubToken && await validatePortConnection(hubPort, hubToken)) {
